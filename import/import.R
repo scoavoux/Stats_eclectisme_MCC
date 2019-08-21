@@ -227,7 +227,7 @@ m <- mutate(m, date_de_l_achat = ymd(date_de_l_achat))
 m <- mutate(m, category = str_replace_all(category, c("\\+Â®|\\?" = "é")))
 
 # m15 <- read_excel(here("data", "consommateurs", "Achats-2015.xlsx"), sheet = 7)
-# m15 <- mutate(m15, HHKEY = as.integer(HHKEY))
+m <- mutate(m, hhkey = as.integer(hhkey))
 
 ### Données distributeurs
 # dis <- read_tsv(file = here("data", "distributeurs", "Dico_physique_France_Musique.csv"),
