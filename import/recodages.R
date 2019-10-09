@@ -2,7 +2,7 @@
 # load(here("data", "data.RData"))
 
 
-n_unique(m$performer)
+# n_unique(m$performer)
 m <- mutate(m, performer = tolower(performer))
 
 ## On considère que artiste X feat. artiste Y doit être attribué à artiste X
@@ -89,12 +89,12 @@ m <- mutate(m, genre = case_when(
   category == "Compilation Thématiques"                 ~ NA_character_,
   category == "Video"                                   ~ NA_character_,
   category == "Texte"                                   ~ NA_character_,
+  category == "Texte Humoristique"                      ~ NA_character_,
   
   category == "Ambiance"                                ~ "Ambiance",
   category == "New Age"                                 ~ "Ambiance",
   category == "New age/ambient"                         ~ "Ambiance",
   category == "Bruitage / Sonorisation / Bruits Nature" ~ "Ambiance",
-  category == "Trip hop"                                ~ "Ambiance",
   category == "Relaxation"                              ~ "Ambiance",
   
   category == "Classique"                               ~ "Classique",
@@ -105,6 +105,10 @@ m <- mutate(m, genre = case_when(
   category == "Classique Messes / Requiem / Passions"   ~ "Classique",
   category == "Classique Musique Baroque"               ~ "Classique",
   category == "Classique Recitals"                      ~ "Classique",
+  category == "Classique Musique de Chambre"            ~ "Classique",
+  category == "Classique Sonate"                        ~ "Classique",
+  category == "Classique Symphonie"                     ~ "Classique",
+  category == "Compilation Classique"                   ~ "Classique",
   
   category == "Comedie Musicale"                        ~ "Comedie musicale",
   category == "Comedies Musicales"                      ~ "Comedie musicale",
@@ -112,12 +116,13 @@ m <- mutate(m, genre = case_when(
   category == "Dance"                                   ~ "Dance",
   category == "Dance Francaise"                         ~ "Dance",
   category == "Dance Internationale"                    ~ "Dance",
+  category == "Compilation Electro / Dance"             ~ "Dance",
   
   category == "Electro"                                 ~ "Electro",
   category == "Electro Francaise"                       ~ "Electro",
   category == "Electro Internationale"                  ~ "Electro",
   category == "Techno - Jungle - House"                 ~ "Electro",
-  category == "Compilation Electro / Dance"             ~ "Electro",
+  category == "Trip hop"                                ~ "Electro",
   
   category == "Compilation Enfant"                      ~ "Enfant",
   category == "Enfant"                                  ~ "Enfant",
@@ -147,17 +152,23 @@ m <- mutate(m, genre = case_when(
   category == "Musiques du Monde Asie / Oceanie"        ~ "Musique du monde",
   category == "Musiques du Monde Europe"                ~ "Musique du monde",
   category == "Musiques du Monde Orient / Pays Arabes"  ~ "Musique du monde",
+  category == "Musiques du Monde Antilles / Reunion"    ~ "Musique du monde",
+  category == "Musiques du Monde Asie / Océanie"        ~ "Musique du monde",
+  category == "Compilation Musiques du Monde"           ~ "Musique du monde",
   
   category == "Rap"                                     ~ "Rap",
   category == "Rap Francais"                            ~ "Rap",
   category == "Rap - Hip Hop"                           ~ "Rap",
   category == "Rap International"                       ~ "Rap",
+  category == "Compilation Urbain"                      ~ "Rap",
   
   category == "Reggae"                                  ~ "Reggae",
   category == "Reggae / Ragga"                          ~ "Reggae",
   category == "Reggae / Ragga International"            ~ "Reggae",
+  category == "Reggae / Ragga Francais"                 ~ "Reggae",
   
   category == "Pop rock"                                ~ "Pop rock",
+  category == "Compilation Pop"                         ~ "Pop rock",
   
   category == "Rock"                                    ~ "Rock",
   category == "Rock Francais"                           ~ "Rock",
@@ -196,9 +207,9 @@ i <- mutate(i, niveau_d_etudes = ifelse(is.na(niveau_d_etudes), niveau_d_etudes_
             profession         = ifelse(is.na(profession),      profession_chef_de_famille,      profession))
 
 ## Préparer l'appareillement des bases de données
-m <- mutate(m, vague = case_when(year(date_de_l_achat) < 2015 ~ "p13_14",
-                                 year(date_de_l_achat) == 2015 ~ "p15",
-                                 year(date_de_l_achat) == 2016 ~ "p16"))
+m <- mutate(m, vague = case_when(year(date_achat) < 2015 ~ "p13_14",
+                                 year(date_achat) == 2015 ~ "p15",
+                                 year(date_achat) == 2016 ~ "p16"))
 
 ## Factoriser
 

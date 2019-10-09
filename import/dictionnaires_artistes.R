@@ -34,6 +34,7 @@ dics[["ordre"]] <- c(
     "^redding otis$" = "otis redding",
     "^sanson veronique$" = "veronique sanson",
     "^santamaria arno$" = "arno santamaria",
+    "^sebastien patrick$" = "patrick sebastien",
     "^sardou michel$" = "michel sardou",
     "^sheeran ed$" = "ed sheeran",
     "^souchon alain$" = "alain souchon",

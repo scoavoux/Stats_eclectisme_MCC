@@ -374,7 +374,7 @@ m <- mutate(m, category = str_replace_all(category, c("\\+Â®|\\?" = "é",
 
 m <- mutate(m, hhkey = as.integer(hhkey))
 
-rm(code_missing, code_missing_num, p, clean_names, ddelete_empty_vars)
+rm(code_missing, code_missing_num, p, clean_names, delete_empty_vars)
 save(i, m, file = here("data", "data.RData"))
 
 
