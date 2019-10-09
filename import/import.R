@@ -41,7 +41,7 @@ clean_names <- function(df){
 }
 
 p <- map(p, clean_names)
-rm(clean_names)
+
 
 ## NOMS DE VARIABLES
 # Le problème: toutes les bases n'ont pas les mêmes variables, mais on veut pouvoir
@@ -176,7 +176,6 @@ p$p18 <- rename(p$p18,
 
 ## Pour les variables non présentes, remplacer le code pour que NA ne se confondent pas
 
-
 code_missing <- "Question non posée cette année"
 code_missing_num <- 99999
 
@@ -284,8 +283,6 @@ i <- select(i,
             -sites_musique_compte_utilisateur_dailymotion,
             -site_musique_compte_utilisateur_youtube)
 
-rm(p)
-
 #### Recodage consommateurs
 
 i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
@@ -294,153 +291,90 @@ i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
 
 
 #### Import consommation #####
-## La base est déjà fusionnée dans le fichier 2013-2014
-# m15_dic <- read_excel(here("data", "consommateurs", "Achats-2015.xlsx"), sheet = 2, skip = 4, col_names = c("Variable", "Description"))
-# 
-# m <- list(m13_14 = read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7), 
-#           m15 = read_excel(here("data", "consommateurs", "Achats-2015.xlsx"), sheet = 7),
-#           m16 = read_excel(here("data", "consommateurs", "Achats_janvier2016_juin2016.xlsx"), sheet = 7))
-# 
-# m <- map(m, clean_names)
-# m <- bind_rows(m)
+## La base 2013-2016 est déjà fusionnée dans le fichier 2013-2014
 
-m <- read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7, col_names = c("HHKEY",
-                                                                                                                  "Identifiant_Déclaration",
-                                                                                                                  "Product_group",
-                                                                                                                  "VideoRental",
-                                                                                                                  "Date_de_l_achat",
-                                                                                                                  "Enseigne",
-                                                                                                                  "Canal_de_Distribution",
-                                                                                                                  "Achat_sur_Internet?",
-                                                                                                                  "Location",
-                                                                                                                  "Planifié",
-                                                                                                                  "Format_1",
-                                                                                                                  "Matériel",
-                                                                                                                  "Téléchargé",
-                                                                                                                  "Téléchargement_HD",
-                                                                                                                  "TelechVision_LecteurMP3",
-                                                                                                                  "TelechVision_PC/notebook",
-                                                                                                                  "TelechVision_Smartphone",
-                                                                                                                  "TelechVision_Tablette",
-                                                                                                                  "TelechVision_Téléviseur",
-                                                                                                                  "Code_EAN",
-                                                                                                                  "TITLE",
-                                                                                                                  "AUTHOR",
-                                                                                                                  "CATEGORY",
-                                                                                                                  "SUB_CATEGORY",
-                                                                                                                  "SUB_CATEGORY_2",
-                                                                                                                  "CINEMA_RELEASE",
-                                                                                                                  "DISTRIBUTOR",
-                                                                                                                  "Format_2",
-                                                                                                                  "LABEL",
-                                                                                                                  "LICENSE",
-                                                                                                                  "NBUNITES",
-                                                                                                                  "PEGI",
-                                                                                                                  "PERFORMER",
-                                                                                                                  "PUBLISHER",
-                                                                                                                  "RELEASE_DATE",
-                                                                                                                  "EXTRACURRICULAR",
-                                                                                                                  "SCHOOL_LEVEL",
-                                                                                                                  "SCHOOL_TOPIC",
-                                                                                                                  "SERIE",
-                                                                                                                  "SERIES",
-                                                                                                                  "NeufOccasion",
-                                                                                                                  "Abonnement",
-                                                                                                                  "MontantAbonnement",
-                                                                                                                  "Prix",
-                                                                                                                  "PrixSpécial",
-                                                                                                                  "Prépayé",
-                                                                                                                  "Cadeau",
-                                                                                                                  "GenreLivre",
-                                                                                                                  "AchetéPour",
-                                                                                                                  "Sexe",
-                                                                                                                  "Age",
-                                                                                                                  "MembreFamille",
-                                                                                                                  "Mobilité",
-                                                                                                                  "Connaissance_Actu",
-                                                                                                                  "Connaissance_ArticleInternet",
-                                                                                                                  "Connaissance_ArticlePresse",
-                                                                                                                  "Connaissance_AutrePub",
-                                                                                                                  "Connaissance_AutreSource",
-                                                                                                                  "Connaissance_BA_cinéma",
-                                                                                                                  "Connaissance_BandeAnnonceTV",
-                                                                                                                  "Connaissance_BAO",
-                                                                                                                  "Connaissance_CatalogueMag",
-                                                                                                                  "Connaissance_Concert_artiste",
-                                                                                                                  "Connaissance_CourrierElec",
-                                                                                                                  "Connaissance_Demande",
-                                                                                                                  "Connaissance_Diff_titre",
-                                                                                                                  "Connaissance_Emission_de_radio",
-                                                                                                                  "Connaissance_Emission/direct",
-                                                                                                                  "Connaissance_EmissionTV",
-                                                                                                                  "Connaissance_EmissionTVLitt",
-                                                                                                                  "Connaissance_Enseignant",
-                                                                                                                  "Connaissance_Facebook",
-                                                                                                                  "Connaissance_HasardMagasin",
-                                                                                                                  "Connaissance_PubInternet",
-                                                                                                                  "Connaissance_PubMag",
-                                                                                                                  "Connaissance_PubPresse",
-                                                                                                                  "Connaissance_PubRadio",
-                                                                                                                  "Connaissance_PubTV",
-                                                                                                                  "Connaissance_RecoMagasin",
-                                                                                                                  "Connaissance_Réseaux_sociaux",
-                                                                                                                  "Connaissance_SiteOfficiel",
-                                                                                                                  "Connaissance_StreamingAudio",
-                                                                                                                  "Connaissance_StreamingVidéo",
-                                                                                                                  "Connaissance_TopPresse",
-                                                                                                                  "Connaissance_Vidéo_clip",
-                                                                                                                  "Connaissance_VisionnéTV",
-                                                                                                                  "Connaissance_VuCinéma",
-                                                                                                                  "DecAchat_Actu",
-                                                                                                                  "DecAchat_ArticleCritiquePresse",
-                                                                                                                  "DecAchat_AttraitGenre",
-                                                                                                                  "DecAchat_Autres_motifs",
-                                                                                                                  "DecAchat_avis_consos_rés._Soc",
-                                                                                                                  "DecAchat_Bouche-à-oreille",
-                                                                                                                  "DecAchat_ClipTV",
-                                                                                                                  "DecAchat_Demande",
-                                                                                                                  "DecAchat_DiffusionRadio",
-                                                                                                                  "DecAchat_EcouteMagSite",
-                                                                                                                  "DecAchat_Emballage",
-                                                                                                                  "DecAchat_Enseignant",
-                                                                                                                  "DecAchat_EssaiJeu",
-                                                                                                                  "DecAchat_ExtraitInternet",
-                                                                                                                  "DecAchat_Fan",
-                                                                                                                  "DecAchat_FeuilletéLivre",
-                                                                                                                  "DecAchat_Internet",
-                                                                                                                  "DecAchat_PrixPromo",
-                                                                                                                  "DecAchat_ProgTV",
-                                                                                                                  "DecAchat_Radio",
-                                                                                                                  "DecAchat_StreamingAudio",
-                                                                                                                  "DecAchat_StreamingVidéo",
-                                                                                                                  "DecAchat_TopPresse",
-                                                                                                                  "DecAchat_Vu_ciné_et_à_revoir",
-                                                                                                                  "DecAchat_Vu_TV_et_à_revoir"), 
-                skip = 1)
+m <- list(m13 = read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7),
+          m17 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 9),
+          m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 9)
+)
 
+m$m13 <- rename(m$m13, 
+               Format_1 = "Format...11",
+               Format_2 = "Format...28")
+
+m <- map(m, clean_names)
+
+# Supprimer variables vides
+delete_empty_vars <- function(df){
+  mutate_all(df, .funs = ~ifelse(. == "<undefined>", NA, .)) %>% 
+    select_if(.predicate = function(x) sum(is.na(x)) < nrow(df))
+}
+
+m <- map(m, delete_empty_vars)
+
+## Fusion: noms de variables
+m$m13 <- rename(m$m13, 
+                achat_pour          = "achetepour",
+                canal_distribution  = "canal_de_distribution",
+                date_achat          = "date_de_l_achat",
+                membre_famille      = "membrefamille",
+                montant_abonnement  = "montantabonnement",
+                prix_special        = "prixspecial"
+)
+
+m$m17 <- rename(m$m17, 
+                code_ean          = "ean13",
+                distributor       = "distribur",
+                neufoccasion      = "neufocca"
+)
+
+m$m18 <- rename(m$m18, 
+                code_ean          = "ean13",
+                distributor       = "distribur",
+                neufoccasion      = "neufocca"
+)
+
+m$m13 <- mutate(m$m13, 
+                occasion_key = code_missing)
+
+m[c("m17", "m18")] <- lapply(m[c("m17", "m18")], function(df){
+  mutate(df, 
+         connaissance_concert_artiste  = code_missing,
+         connaissance_diff_titre       = code_missing,
+         connaissance_emission_direct  = code_missing,
+         connaissance_pubtv            = code_missing,
+         connaissance_streamingaudio   = code_missing,
+         connaissance_streamingvideo   = code_missing,
+         connaissance_video_clip       = code_missing,
+         decachat_cliptv               = code_missing,
+         decachat_diffusionradio       = code_missing,
+         decachat_ecoutemagsite        = code_missing,
+         decachat_streamingaudio       = code_missing,
+         decachat_streamingvideo       = code_missing,
+         identifiant_declaration       = code_missing_num
+  ) %>% 
+    rename(achat_magasin_ou_internet = "achat_magasin_ou_internet_?")
+})
+
+m$m13 <- rename_if(m$m13, str_detect(names(m$m13), "achat_sur_internet"), function(x) "achat_magasin_ou_internet")
+
+## Fusion
+
+m <- bind_rows(m)
 
 #### Recodage consommation ####
-
-m <- mutate_all(m, .funs = ~ifelse(. == "<undefined>", NA, .))
-
-m <- rename_all(m, tolower)
-
-## Le recodage des valeurs manquantes produit un certain nombre de variables inutiles: tout est manquant/undefined.
-## On sélectionne seulement les variables dont le compte total des NA est inférieur à nrow:
-m <- select_if(m, .predicate = function(x) sum(is.na(x)) < nrow(m))
-
-m <- mutate(m, date_de_l_achat = ymd(date_de_l_achat))
+m <- mutate(m, date_achat = ymd(date_achat))
 
 # Catégorie: corriger erreurs d'encodage
-m <- mutate(m, category = str_replace_all(category, c("\\+Â®|\\?" = "é")))
+m <- mutate(m, category = str_replace_all(category, c("\\+Â®|\\?" = "é",
+                                                      "AÂ©" = "é")))
 
-# m15 <- read_excel(here("data", "consommateurs", "Achats-2015.xlsx"), sheet = 7)
+# Todo?
+# achat_magasin_ou_internet a des modalités différentes dans les deux bases.
+
 m <- mutate(m, hhkey = as.integer(hhkey))
 
-### Données distributeurs
-# dis <- read_tsv(file = here("data", "distributeurs", "Dico_physique_France_Musique.csv"),
-#                 col_types = "cccccccc")
-
+rm(code_missing, code_missing_num, p, clean_names, ddelete_empty_vars)
 save(i, m, file = here("data", "data.RData"))
 
 
