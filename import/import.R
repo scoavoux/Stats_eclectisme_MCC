@@ -407,7 +407,7 @@ m$m13 <- rename_if(m$m13, str_detect(names(m$m13), "achat_sur_internet"), functi
 
 ## Fusion
 
-m <- bind_rows(m, .id = "vague")
+m <- bind_rows(m, .id = "vague_conso")
 
 #### Recodage consommation ####
 m <- mutate(m, date_achat = ymd(date_achat))

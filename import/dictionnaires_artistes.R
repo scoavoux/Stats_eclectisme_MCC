@@ -39,7 +39,19 @@ dics[["ordre"]] <- c(
     "^sheeran ed$" = "ed sheeran",
     "^souchon alain$" = "alain souchon",
     "^vassili amaury$" = "amaury vassili",
-    "^farlow$" = "tal farlow")
+    "^farlow$" = "tal farlow",
+    "^halliday johnny$"  = "johnny hallyday",
+    "^biolay benjamin$" = "benjamin biolay",
+    "^cabrel francis$" = "francis cabrel",
+    "^cohen avishai$" = "avishai cohen",
+    "^fabian lara$" = "lara fabian",
+    "^farmer mylene$" = "mylene farmer",
+    "^hardy francoise$" = "francoise hardy",
+    "^moire emmanuel$" = "emmanuel moire",
+    "^obispo pascal$" = "pascal obispo",
+    "^springsteen bruce$" = "bruce springsteen",
+    "^williams pharell$" = "pharell williams"
+    )
 
 # fautes d'orthographe
 dics[["ortho"]] <- c(
@@ -129,7 +141,33 @@ dics[["ortho"]] <- c(
     "mickael jackson history futu" = "michael jackson",
     "naked & famous the" = "the naked & famous",
     "pink floyd atom heart mother \\(" = "pink floyd",
-    "ritchie blackmore s rainbow" = "rainbow")
+    "ritchie blackmore s rainbow" = "rainbow",
+    "konono nâ°1" = "konono n1",
+    "winston mcanuff & fixiâ" = "winston mcanuff & fixi",
+    "^bowie$" = "david bowie",
+    "^david guetta bebe rexha & j balvin$" = "david guetta",
+    "^del rey lana$" = "lana del rey",
+    "^depeche mode/derek marin$" = "depeche mode",
+    "^fontaine brigitte"= "brigitte fontaine",
+    "^gainsbourg$" = "serge gainsbourg",
+    "^gainsbourg in jazz$" = "serge gainsbourg",
+    "^hallyday$" = "johnny hallyday",
+    "^ibrahim maalouf / oxmo puccino$" = "ibrahim maalouf & oxmo puccino",
+    "^jackson 5$" = "jackson five",
+    "^jarre experience$" = "jean michel jarre",
+    "^karaoke johnny hallyday$" = "johnny hallyday",
+    "^karaoke michel sardou$" = "michel sardou",
+    "^keen$" = "keen v",
+    "^kids united nouvelle generation$" = "kids united",
+    "^louane emera$" = "louane",
+    "^made famous by katy perry$" = "katy perry",
+    "^mae$" = "christophe mae",
+    "^mae christophe/ansaldi lysa$" = "christophe mae & lysa ansaldi",
+    "^maitre gims \\(feat vianney\\)$" = "maitre gims & vianney",
+    "^nate dogg eminem$" = "eminem",
+    "^scorpion$" = "scorpions",
+    "^spirit of johnny hallyday$" = "johnny hallyday",
+    "^titres rendus celebres par christophe willem$" = "christophe willem")
 
 # vérification à partir des noms d'albums
 dics[["verif"]] <- c(

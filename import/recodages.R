@@ -20,8 +20,16 @@ m <- mutate(m, performer = str_replace_all(performer, "[,\\-'\\.]", " "))
 ## Corriger les erreurs d'encodage/accents
 m <- mutate(m, performer = str_replace_all(performer, "\\+\\?", "e"))
 m <- mutate(m, performer = str_replace_all(performer, "\\+â®", "e"))
+m <- mutate(m, performer = str_replace_all(performer, "â®", "e"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ©", "e"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ«", "e"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ\\?°", "e"))
+m <- mutate(m, performer = str_replace_all(performer, "\\+â«", "i"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ®", "i"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ§", "c"))
+m <- mutate(m, performer = str_replace_all(performer, "aâ¶", "o"))
 
-## remplacer les doubles/triples espaces
+  ## remplacer les doubles/triples espaces
 m <- mutate(m, performer = str_replace_all(performer, "\\s+", " "))
 ## trim whitespaces
 m <- mutate(m, performer = str_replace_all(performer, "\\s$", ""))
@@ -207,7 +215,11 @@ i <- mutate(i, niveau_d_etudes = ifelse(is.na(niveau_d_etudes), niveau_d_etudes_
             profession         = ifelse(is.na(profession),      profession_chef_de_famille,      profession))
 
 ## Préparer l'appareillement des bases de données
-m <- mutate(m, vague = case_when(year(date_achat) < 2015 ~ "p13_14",
+m <- mutate(m, vague = case_when(vague_conso == "m17"     ~ "p17",
+                                 vague_conso == "m18"     ~ "p18",
+                                 vague_conso == "m19"     ~ "p19",
+                                 year(date_achat) == 2013 ~ "p13",
+                                 year(date_achat) == 2014 ~ "p14",
                                  year(date_achat) == 2015 ~ "p15",
                                  year(date_achat) == 2016 ~ "p16"))
 
