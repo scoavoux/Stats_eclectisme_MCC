@@ -14,7 +14,9 @@ p <- list(p13 = read_excel(here("data", "consommateurs", "RВponses Profilage 13
           p15 = read_excel(here("data", "consommateurs", "RВponses Profilage 15.xlsx"), sheet = 3),
           p16 = read_excel(here("data", "consommateurs", "RВponses Profilage 16.xlsx"), sheet = 3),
           p17 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 2),
-          p18 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 2))
+          p18 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 2),
+          p19 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q1.xlsx"), sheet = 2)
+          )
 
 ## Corriger les erreurs qui se voient à l'importation
 p$p14 <- rename(p$p14, HHKEY = "HHKEY...1") %>% 
@@ -174,6 +176,51 @@ p$p18 <- rename(p$p18,
            ecoute_musique_sites_steaming       = "ecoute_musique_site_streaming"
 )
 
+p[c("p19")] <- lapply(p[c("p19")],
+                             function(df){
+                               rename(df, 
+                                      ecoute_musique_cd_vinyles           = "ecoute_musique_cd___vinyles",
+                                      ecoute_musique_mp3_telecharge       = "ecoute_musique_mp3_telechargee",
+                                      ecoute_musique_radio_web_radio      = "ecoute_musique_radio___web_radio",
+                                      ecoute_musique_sites_steaming       = "ecoute_musique_site_streaming",
+                                      freq_assist_concert                 = "frequence_assiste_a_des_concerts",
+                                      freq_autressites_streaming          = "frequence_autre_sites_streaming",
+                                      freq_dailymotion_streaming          = "frequence_dailymotion_streaming",
+                                      freq_emprunt_livre_biblio           = "frequence_emprunt_livres_bibliotheque",
+                                      freq_films_rattrapage               = "frequence_films_rattrapage",
+                                      freq_ratrappe_feuilletons           = "frequence_rattrape_feuilletons",
+                                      freq_rattrape_6play                 = "frequence_rattrape_6play",
+                                      freq_rattrape_autres_programmes     = "frequence_rattrape_autres_programmes",
+                                      freq_rattrape_autres_services       = "frequence_rattrape_autres_services",
+                                      freq_rattrape_dessins_animes        = "frequence_rattrape_dessins_animes",
+                                      freq_rattrape_documentaires         = "frequence_rattrape_documentaires",
+                                      freq_rattrape_mytf1                 = "frequence_rattrape_mytf1",
+                                      freq_rattrape_pluzz                 = "frequence_rattrape_pluzz",
+                                      freq_rattrape_series_americ.        = "frequence_rattrape_series_americaines",
+                                      freq_rattrape_series_francaises     = "frequence_rattrape_series_francaises",
+                                      freq_telech_ebook                   = "frequence_telechargement_ebook",
+                                      freq_telech_mus_sans_payer          = "frequence_telecharge_musique_sans_payer",
+                                      freq_telecharge_vid_sans_payer      = "frequence_telecharge_videos_sans_payer",
+                                      freq_tv_replay                      = "frequence_tv_replay",
+                                      freq_youtube_streaming              = "frequence_youtube_streaming",
+                                      poss_equip_console_de_jeux          = "possession_equipement_console_de_jeux",
+                                      poss_equip_telephone_portable       = "possession_equipement_telephone_portable",
+                                      possession_console_nintendo_3ds     = "possession_console_nitendo_3ds",
+                                      possession_console_nintendo_ds      = "possession_console_nitendo_ds",
+                                      possession_lecteurs_bluray          = "possession_lecteur_bluray",
+                                      regardez_autres_types_video         = "regardez_vous_autres_types_videos",
+                                      regardez_emissions_ou_series        = "regardez_vous_emmissions_ou_series",
+                                      regardez_films_ou_des_series        = "regardez_vous_films_ou_series",
+                                      regardez_videos_a_la_demande        = "regardez_vous_videos_a_la_demande",
+                                      regardez_videos_telechargees        = "regardez_vous_videos_telechargees",
+                                      taille_d_agglo                      = "taille_d_agglomeration",
+                                      fr_marque_tablette_apple_ipad       = "marque_tablette_apple_ipad",
+                                      site_musique_compte_utilisateur_google       = "site_musique_compte_utilisateur_google_play",
+                                      
+                               )
+                             }
+)
+
 ## Pour les variables non présentes, remplacer le code pour que NA ne se confondent pas
 
 code_missing <- "Question non posée cette année"
@@ -234,7 +281,7 @@ p[c("p13", "p14", "p15", "p16", "p17")] <- lapply(p[c("p13", "p14", "p15", "p16"
 )
 
 ## Variables non présentes en 2013, 2017, 2018
-p[c("p13", "p17", "p18")] <- lapply(p[c("p13", "p17", "p18")],
+p[c("p13", "p17", "p18", "p19")] <- lapply(p[c("p13", "p17", "p18", "p19")],
   function(df){
     mutate(df, fr_marque_liseuse_autre       = code_missing,
                fr_marque_liseuse_kindle_amaz = code_missing,
@@ -244,7 +291,7 @@ p[c("p13", "p17", "p18")] <- lapply(p[c("p13", "p17", "p18")],
 )
 
 ## Variables non présentes en 2017, 2018
-p[c("p17", "p18")] <- lapply(p[c("p17", "p18")],
+p[c("p17", "p18", "p19")] <- lapply(p[c("p17", "p18", "p19")],
   function(df){
     mutate(df, code_postal = code_missing_num
                )
@@ -252,25 +299,17 @@ p[c("p17", "p18")] <- lapply(p[c("p17", "p18")],
 )
 
 ## Variables non présentes en 2018
-p[c("p18")] <- lapply(p[c("p18")],
+p[c("p18", "p19")] <- lapply(p[c("p18", "p19")],
   function(df){
     mutate(df, freq_telech_mus_streaming = code_missing
                )
   }
 )
 
-## ARGH! il y a une variable en trop dans p$p13_14$hhkey
-## buyer = extrait de la variable hhkey dans p13_14
-p$p13 <- separate(p$p13, hhkey, into = c("hhkey", "buyer"), sep = 8) %>% 
-  mutate(hhkey = as.integer(hhkey))
-p$p14 <- separate(p$p14, hhkey, into = c("hhkey", "buyer"), sep = 8) %>% 
-  mutate(hhkey = as.integer(hhkey))
-p$p17 <- separate(p$p17, hhkey, into = c("hhkey", "buyer"), sep = 8) %>% 
-  mutate(hhkey = as.integer(hhkey))
-
-# Préparer la fusion
+# harmonyser hhkey
 p <- map(p, function(df){
-  mutate(df, hhkey = as.integer(hhkey)) #hhkey  est un integer = ne pas risquer un arrondi
+  separate(df, hhkey, into = c("hhkey", "buyer"), sep = 8) %>% 
+    mutate(hhkey = as.integer(hhkey))
 })
 
 i <- bind_rows(p, .id = "vague")
@@ -283,12 +322,12 @@ i <- select(i,
             -sites_musique_compte_utilisateur_dailymotion,
             -site_musique_compte_utilisateur_youtube)
 
+i <- rename(i, ecoute_musique_sites_streaming = "ecoute_musique_sites_steaming",
+            site_musique_compte_utilisateur_google_play = "site_musique_compte_utilisateur_google")
+
 #### Recodage consommateurs
 
 i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
-
-
-
 
 #### Import consommation #####
 ## La base 2013-2016 est déjà fusionnée dans le fichier 2013-2014
