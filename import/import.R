@@ -334,8 +334,10 @@ i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
 
 m <- list(m13 = read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7),
           m17 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 9),
-          m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 9)
-)
+          m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 9),
+          m19 = bind_rows(read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q1.xlsx"), sheet = 9),
+                          read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q2.xlsx"), sheet = 9))
+          )
 
 m$m13 <- rename(m$m13, 
                Format_1 = "Format...11",
@@ -373,10 +375,16 @@ m$m18 <- rename(m$m18,
                 neufoccasion      = "neufocca"
 )
 
+m$m19 <- rename(m$m19, 
+                code_ean          = "ean13",
+                distributor       = "distribur",
+                neufoccasion      = "neufocca"
+)
+
 m$m13 <- mutate(m$m13, 
                 occasion_key = code_missing)
 
-m[c("m17", "m18")] <- lapply(m[c("m17", "m18")], function(df){
+m[c("m17", "m18", "m19")] <- lapply(m[c("m17", "m18", "m19")], function(df){
   mutate(df, 
          connaissance_concert_artiste  = code_missing,
          connaissance_diff_titre       = code_missing,
@@ -399,7 +407,7 @@ m$m13 <- rename_if(m$m13, str_detect(names(m$m13), "achat_sur_internet"), functi
 
 ## Fusion
 
-m <- bind_rows(m)
+m <- bind_rows(m, .id = "vague")
 
 #### Recodage consommation ####
 m <- mutate(m, date_achat = ymd(date_achat))
