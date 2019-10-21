@@ -215,6 +215,7 @@ dics[["ordre"]] <- c(
 # fautes d'orthographe
 dics[["ortho"]] <- c(
     "^2 pac$" = "2pac",
+    "\\?\\?\\?\\? \\?\\?\\?\\?\\?\\?\\?\\?\\?\\?" = NA,
     "^ac dc$" = "ac/dc",
     "^acdc$" = "ac/dc",
     "^anne etchegoyen le choeur aizkoa$" = "anne etchegoyen & le choeur aizkoa",
@@ -331,6 +332,8 @@ dics[["ortho"]] <- c(
     "^aznavour$" = "charles aznavour",
     "^gerald de palmas$" = "de palmas",
     "^noah$" = "yannick noah",
+    "^lounis aa\\?t menguellet$" = "lounis ait menguellet",
+    "^ma\\?nica sintra$" = "monica sintra",
     #openrefine
     "^sting/shaggy$" = "sting & shaggy",
     "^thechap$" = "the chap",

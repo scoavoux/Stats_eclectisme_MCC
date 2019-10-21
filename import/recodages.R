@@ -47,6 +47,7 @@ for(dic in dics){
 m <- mutate(m, performer = case_when(
   title == "Changes" & performer == "faul & wad ad" ~ "faul & wad ad vs pnau",
   title == "LOUIS ARMSTRONG MEETS OSC/ARMSTRONG" & performer == "armstrong" ~ "louis armstrong",
+  title == "Samson FRANCOIS, piano" ~ "samson francois"
   title == "Jimmy" & performer == "cats on trees" ~ "cats on trees & calogero",
   title == "Jimmy" & performer == "cats on trees / calogero" ~ "cats on trees & calogero",
   title == "Kendji" & is.na(performer) ~ "kendji girac",
