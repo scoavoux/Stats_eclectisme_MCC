@@ -333,6 +333,7 @@ i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
 ## La base 2013-2016 est déjà fusionnée dans le fichier 2013-2014
 
 m <- list(m13 = read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7),
+          m16 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2016 - Q3 & Q4.xlsx"), sheet = 8),
           m17 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 9),
           m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 9),
           m19 = bind_rows(read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q1.xlsx"), sheet = 9),
@@ -363,6 +364,13 @@ m$m13 <- rename(m$m13,
                 prix_special        = "prixspecial"
 )
 
+# devrait être une fonction
+m$m16 <- rename(m$m16, 
+                code_ean          = "ean13",
+                distributor       = "distribur",
+                neufoccasion      = "neufocca"
+)
+
 m$m17 <- rename(m$m17, 
                 code_ean          = "ean13",
                 distributor       = "distribur",
@@ -384,7 +392,7 @@ m$m19 <- rename(m$m19,
 m$m13 <- mutate(m$m13, 
                 occasion_key = code_missing)
 
-m[c("m17", "m18", "m19")] <- lapply(m[c("m17", "m18", "m19")], function(df){
+m[c("m16", "m17", "m18", "m19")] <- lapply(m[c("m16", "m17", "m18", "m19")], function(df){
   mutate(df, 
          connaissance_concert_artiste  = code_missing,
          connaissance_diff_titre       = code_missing,

@@ -409,7 +409,7 @@ dics[["divers"]] <- c(
     "^multi interpr\\?tes$" = "artistes divers",
     "^multi compositeurs$" = "artistes divers",
     "^multi interpretes$" = "artistes divers",
-    "^multi interpra?tes$" = "artistes divers",
+    "^multi interpra\\?tes$" = "artistes divers",
     "^various artist$" = "artistes divers",
     "^various artists$" = "artistes divers",
     "^various" = "artistes divers",
@@ -586,7 +586,9 @@ and_dic <- c("postec agnes & le cann emmanuelle pia" = "agnes postec & emmanuell
              "jeff beck with terry bozzio and tony hymas" = "jeff beck",
              "naestro \\[feat maitre gims vitaa dadju & slimane" = "naestro",
              "orchestre de la troupe de danse classique khmere auteurs : jean daniel bloesch & giovanni giuriati" = "orchestre de la troupe de danse classique khmere",
-             "stevie ray vaughan & double trouble" = "stevie ray vaughan")
+             "stevie ray vaughan & double trouble" = "stevie ray vaughan",
+             "nick cave & the bad seeds" = "nick cave",
+             "nick cave and the bad seeds" = "nick cave")
 
 #### Annexes: les scripts pour diagnostiquer les problèmes
 
