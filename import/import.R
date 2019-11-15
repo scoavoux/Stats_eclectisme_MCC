@@ -9,13 +9,13 @@ library(stringr)
 #p15_dic <- read_excel(here("data", "consommateurs", "RВponses Profilage 15.xlsx"), sheet = 2, skip = 5)
 
 ## On importe les trois bases de 2013 à 2016 dans un même objet (pour map après coup)
-p <- list(p13 = read_excel(here("data", "consommateurs", "RВponses Profilage 1314.xlsx"), sheet = 3),
-          p14 = read_excel(here("data", "consommateurs", "RВponses Profilage 1314.xlsx"), sheet = 4),
-          p15 = read_excel(here("data", "consommateurs", "RВponses Profilage 15.xlsx"), sheet = 3),
-          p16 = read_excel(here("data", "consommateurs", "RВponses Profilage 16.xlsx"), sheet = 3),
-          p17 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 2),
-          p18 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 2),
-          p19 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q1.xlsx"), sheet = 2)
+p <- list(p13 = read_excel(here("data", "consommateurs", "Reponses Profilage 1314.xlsx"), sheet = 3),
+          p14 = read_excel(here("data", "consommateurs", "Reponses Profilage 1314.xlsx"), sheet = 4),
+          p15 = read_excel(here("data", "consommateurs", "Reponses Profilage 15.xlsx"), sheet = 3),
+          p16 = read_excel(here("data", "consommateurs", "Reponses Profilage 16.xlsx"), sheet = 3),
+          p17 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2017.xlsx"), sheet = 2),
+          p18 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2018.xlsx"), sheet = 2),
+          p19 = read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2019 - Q1.xlsx"), sheet = 2)
           )
 
 ## Corriger les erreurs qui se voient à l'importation
@@ -365,29 +365,16 @@ m$m13 <- rename(m$m13,
 )
 
 # devrait être une fonction
-m$m16 <- rename(m$m16, 
-                code_ean          = "ean13",
-                distributor       = "distribur",
-                neufoccasion      = "neufocca"
-)
+rename_m <- function(df){
+  rename(df, 
+         code_ean          = "ean13",
+         distributor       = "distribur",
+         neufoccasion      = "neufocca"
+  )
+}
 
-m$m17 <- rename(m$m17, 
-                code_ean          = "ean13",
-                distributor       = "distribur",
-                neufoccasion      = "neufocca"
-)
+m <- map_at(m, paste0("m", 16L:19L), rename_m)
 
-m$m18 <- rename(m$m18, 
-                code_ean          = "ean13",
-                distributor       = "distribur",
-                neufoccasion      = "neufocca"
-)
-
-m$m19 <- rename(m$m19, 
-                code_ean          = "ean13",
-                distributor       = "distribur",
-                neufoccasion      = "neufocca"
-)
 
 m$m13 <- mutate(m$m13, 
                 occasion_key = code_missing)
