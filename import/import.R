@@ -19,12 +19,14 @@ p <- list(p13 = read_excel(here("data", "consommateurs", "Reponses Profilage 131
           )
 
 ## Corriger les erreurs qui se voient à l'importation
-p$p14 <- rename(p$p14, HHKEY = "HHKEY...1") %>% 
-  select(-`HHKEY...2`)
+p <- map(p, function(df) rename_all(df, ~str_replace(., "\\.+", ".")))
+
+p$p14 <- rename(p$p14, HHKEY = "HHKEY.1") %>% 
+  select(-`HHKEY.2`)
 
 p$p17 <- rename(p$p17, 
-                `Sexe des membres 01 du foyer` = "Sexe des membres 02 du foyer...22",
-                `Sexe des membres 02 du foyer` = "Sexe des membres 02 du foyer...23",
+                `Sexe des membres 01 du foyer` = "Sexe des membres 02 du foyer.22",
+                `Sexe des membres 02 du foyer` = "Sexe des membres 02 du foyer.23",
                 ## Celle-ci n'apparaît pas comme erreur, mais est grossière (première colonne du fichier excel pour 2017)
                 HHKEY = "KEY")
 
