@@ -335,11 +335,11 @@ i <- mutate_all(i, .funs = ~ ifelse(. == "<undefined>", NA, .))
 ## La base 2013-2016 est déjà fusionnée dans le fichier 2013-2014
 
 m <- list(m13 = read_excel(here("data", "consommateurs", "Achats_juillet 2013_decembre_2014.xlsx"), sheet = 7),
-          m16 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2016 - Q3 & Q4.xlsx"), sheet = 8),
-          m17 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2017.xlsx"), sheet = 9),
-          m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2018.xlsx"), sheet = 9),
-          m19 = bind_rows(read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q1.xlsx"), sheet = 9),
-                          read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Année 2019 - Q2.xlsx"), sheet = 9))
+          m16 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2016 - Q3 & Q4.xlsx"), sheet = 8),
+          m17 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2017.xlsx"), sheet = 9),
+          m18 = read_excel(path = here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2018.xlsx"), sheet = 9),
+          m19 = bind_rows(read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2019 - Q1.xlsx"), sheet = 9),
+                          read_excel(here("data", "consommateurs", "GfK Panel Consommateurs - Extract Annee 2019 - Q2.xlsx"), sheet = 9))
           )
 
 m$m13 <- rename(m$m13, 
