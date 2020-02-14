@@ -1,0 +1,177 @@
+---
+title: "Redressement"
+author: "Fabienne Gire & Samuel Coavoux"
+date: "13/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(here)
+opts_chunk$set(echo = TRUE,
+               error = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+source(here("scripts", "packages.R"))
+```
+
+
+```{r}
+load(here("data", "data.RData"))
+source(here("import", "recodages_individus.R"))
+```
+
+```{r}
+source(here("ponderation", "RP2016.R"))
+```
+
+
+# Distribution des variables de quota dans le recensement
+```{r}
+svytable(~SEXE, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+# Répartition par âge
+svytable(~AGEDC, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+# Répartition par région
+svytable(~REGION, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+svytable(~REG_mod, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+svytable(~REG, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+svytable(~regparis, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+```{r}
+# Répartition par CS2
+svytable(~PCS_mod, rw) %>% 
+  questionr::freq(total = TRUE) %>% 
+  kable()
+```
+
+# Distribution des variables de quota dans la base
+
+```{r}
+mytablei <- function(var){
+  i %>%
+    group_by(vague, (!! sym(var))) %>%
+    summarise(nb = n()) %>%
+    mutate(pourcentage = nb / sum(nb) * 100, pourcentage = round(pourcentage,1)) %>%
+    select(-nb) %>% 
+    spread(vague, pourcentage) %>%
+    kable()
+}
+```
+
+```{r}
+
+mytablei("sexe")
+```
+
+```{r}
+mytablei("PCS_mod")
+```
+
+```{r}
+mytablei("regparis")
+```
+
+```{r}
+mytablei("agec")
+```
+
+# Redressement
+
+```{r}
+source(here("ponderation", "calage.R"))
+```
+
+```{r}
+iw <- vector("list", length = 7)
+names(iw) <- unique(i$vague)
+
+for(v in unique(i$vague)){
+  iw[[v]] <- svydesign(ids = ~1, data = filter(i, vague == v), weights = filter(i, vague == v)$poids)
+}
+
+```
+
+```{r}
+ggplot(i, aes(poids)) +
+  geom_density() +
+  facet_wrap(~vague)
+```
+
+# Distribution des quotas après redressement
+
+```{r}
+map(iw, .f = function(df){
+  svytable(~sexe, df) %>% 
+    freq(total = TRUE) %>% 
+    kable()
+})
+
+```
+
+
+```{r}
+map(iw, .f = function(df){
+  svytable(~agec, df) %>% 
+    freq(total = TRUE) %>% 
+    kable()
+})
+
+```
+
+```{r}
+map(iw, .f = function(df){
+  svytable(~sexe, df) %>% 
+    freq(total = TRUE) %>% 
+    kable()
+})
+
+```
+
+```{r}
+map(iw, .f = function(df){
+  svytable(~PCS_mod, df) %>% 
+    freq(total = TRUE) %>% 
+    kable()
+})
+
+```
+
+```{r}
+map(iw, .f = function(df){
+  svytable(~regparis, df) %>% 
+    freq(total = TRUE) %>% 
+    kable()
+})
+
+```
+
+
