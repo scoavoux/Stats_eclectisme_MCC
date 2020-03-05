@@ -19,11 +19,11 @@ source(here("scripts", "packages.R"))
 
 ```{r}
 load(here("data", "data.RData"))
-source(here("import", "recodages_individus.R"))
+source(here("import", "recodages_individus.R"), encoding = "UTF-8")
 ```
 
 ```{r}
-source(here("ponderation", "RP2016.R"))
+source(here("ponderation", "RP2016.R"), encoding = "UTF-8")
 ```
 
 
@@ -107,7 +107,7 @@ mytablei("agec")
 # Redressement
 
 ```{r}
-source(here("ponderation", "calage.R"))
+source(here("ponderation", "calage.R"), encoding = "UTF-8")
 ```
 
 ```{r}
