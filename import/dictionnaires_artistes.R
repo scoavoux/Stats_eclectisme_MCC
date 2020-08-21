@@ -223,7 +223,7 @@ dics[["ortho"]] <- c(
     "^ben harper and the innocent criminals$" = "ben harper & the innocent criminals",
     "^black eyed peas$" = "the black eyed peas",
     "^bon jovi$" = "jon bon jovi",
-    "^bruce springsteen and the e street band$" = "bruce springsteen & the e street band",
+    "^bruce springsteen and the e street band$" = "bruce springsteen",
     "^buzzcocks$" = "the buzzcocks",
     "^c\\?line dion$" = "celine dion",
     "^chordettes$" = "the chordettes",

@@ -1,17 +1,7 @@
-## Chargement de packages 
-library(tidyverse)
-library(lubridate) 
-library(readxl) 
-library(here) 
-library(stringr) 
-library(DT)
-library(knitr)
-
 ## Chargement des données
-load(here("data", "data.RData"))
+# load(here("data", "data.RData"))
 
 ## fonction 
-`%not in%`<- Negate(`%in%`)
 
 ###### Base individu ######
 
@@ -68,15 +58,15 @@ i <- mutate(i, milieu = case_when(profession_chef_de_famille == "Agriculteur exp
                                   profession_chef_de_famille == "Commerçant et assimilé"         ~ "Agriculteur, artisan, commerçant", 
                                   profession_chef_de_famille == "Anc. artis/commerc/chef entrep" ~ "Agriculteur, artisan, commerçant", 
                                   profession_chef_de_famille == "Ancien agric. exploitant"       ~ "Agriculteur, artisan, commerçant", 
-                                  profession_chef_de_famille == "Chef d’entreprise +10 sal."     ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
-                                  profession_chef_de_famille == "Profession lib. & assimilé"     ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
-                                  profession_chef_de_famille == "Cadre d’entreprise"             ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
-                                  profession_chef_de_famille == "Anc. cadre      & prof. Inter"  ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI", 
-                                  profession_chef_de_famille == "Cadre fonc pub/prof intel/art"  ~ "Cadres et PI de fonction publique / intell.",
-                                  profession_chef_de_famille == "inter enseig/santé/fonc. pub"   ~ "Cadres et PI de fonction publique / intell.",
-                                  profession_chef_de_famille == "Contremaitre/agent maitrise"    ~ "Autres professions intermédiaires", 
-                                  profession_chef_de_famille == "Prof inter adm/com entrep."     ~ "Autres professions intermédiaires",
-                                  profession_chef_de_famille == "Technicien"                     ~ "Autres professions intermédiaires",
+                                  profession_chef_de_famille == "Chef d’entreprise +10 sal."     ~ "Cadres et prof. intell. sup., chefs. entrep.",
+                                  profession_chef_de_famille == "Profession lib. & assimilé"     ~ "Cadres et prof. intell. sup., chefs. entrep.",
+                                  profession_chef_de_famille == "Cadre d’entreprise"             ~ "Cadres et prof. intell. sup., chefs. entrep.",
+                                  profession_chef_de_famille == "Anc. cadre      & prof. Inter"  ~ "Retraité CPIS/PI", 
+                                  profession_chef_de_famille == "Cadre fonc pub/prof intel/art"  ~ "Cadres et prof. intell. sup., chefs. entrep.",
+                                  profession_chef_de_famille == "inter enseig/santé/fonc. pub"   ~ "Professions intermédiaires",
+                                  profession_chef_de_famille == "Contremaitre/agent maitrise"    ~ "Professions intermédiaires", 
+                                  profession_chef_de_famille == "Prof inter adm/com entrep."     ~ "Professions intermédiaires",
+                                  profession_chef_de_famille == "Technicien"                     ~ "Professions intermédiaires",
                                   profession_chef_de_famille == "Ancien employé et ouvrier"      ~ "Ouvriers et employés",
                                   profession_chef_de_famille == "Pers services dir. aux part"    ~ "Ouvriers et employés", 
                                   profession_chef_de_famille == "Employé admin entreprise"       ~ "Ouvriers et employés",
@@ -89,36 +79,69 @@ i <- mutate(i, milieu = case_when(profession_chef_de_famille == "Agriculteur exp
                                   profession_chef_de_famille == "Chômeur n’ayant jamais trav."   ~ "Autres",
                                   profession_chef_de_famille == "Inactif div autre que retraité" ~ "Autres"),
             milieu = factor(milieu, levels = c("Agriculteur, artisan, commerçant", 
-                                               "Cadre privé, chef d'entreprise, retraité CPIS/PI",
-                                               "Cadres et PI de fonction publique / intell.",
-                                               "Autres professions intermédiaires", 
+                                               "Cadres et prof. intell. sup., chefs. entrep.",
+                                               "Retraité CPIS/PI",
+                                               "Professions intermédiaires", 
                                                "Ouvriers et employés",
                                                "Autres")))
 
-### Études
-## À revoir avec le questionnaire
-dip <- c("Pas d’école" = "Moins que bac", 
-         "Etudes primaires" = "Moins que bac", 
-         "Enseig. Tech ou Pro COURT" = "Moins que bac", 
-         "Enseig. Tech ou Pro LONG" = "Moins que bac", 
-         "1er cycle d’enseignement gén" = "Moins que bac", 
-         "2ème cycle d’enseignement gén" = "Bac", 
-         "Enseignement Supérieur COURT" = "Enseignement Supérieur COURT", 
-         "Enseignement Supérieur LONG" = "Enseignement Supérieur LONG")
+i <- mutate(i, milieu_alt = case_when(profession_chef_de_famille == "Agriculteur exploitant"         ~ "Agriculteur, artisan, commerçant", 
+                                      profession_chef_de_famille == "Artisan"                        ~ "Agriculteur, artisan, commerçant",
+                                      profession_chef_de_famille == "Commerçant et assimilé"         ~ "Agriculteur, artisan, commerçant", 
+                                      profession_chef_de_famille == "Anc. artis/commerc/chef entrep" ~ "Agriculteur, artisan, commerçant", 
+                                      profession_chef_de_famille == "Ancien agric. exploitant"       ~ "Agriculteur, artisan, commerçant", 
+                                      profession_chef_de_famille == "Chef d’entreprise +10 sal."     ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
+                                      profession_chef_de_famille == "Profession lib. & assimilé"     ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
+                                      profession_chef_de_famille == "Cadre d’entreprise"             ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI",
+                                      profession_chef_de_famille == "Anc. cadre      & prof. Inter"  ~ "Cadre privé, chef d'entreprise, retraité CPIS/PI", 
+                                      profession_chef_de_famille == "Cadre fonc pub/prof intel/art"  ~ "Cadres et PI de fonction publique / intell.",
+                                      profession_chef_de_famille == "inter enseig/santé/fonc. pub"   ~ "Cadres et PI de fonction publique / intell.",
+                                      profession_chef_de_famille == "Contremaitre/agent maitrise"    ~ "Autres professions intermédiaires", 
+                                      profession_chef_de_famille == "Prof inter adm/com entrep."     ~ "Autres professions intermédiaires",
+                                      profession_chef_de_famille == "Technicien"                     ~ "Autres professions intermédiaires",
+                                      profession_chef_de_famille == "Ancien employé et ouvrier"      ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Pers services dir. aux part"    ~ "Ouvriers et employés", 
+                                      profession_chef_de_famille == "Employé admin entreprise"       ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Employé de commerce"            ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Employé fonction publique"      ~ "Ouvriers et employés", 
+                                      profession_chef_de_famille == "Ouvrier qualifié"               ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Ouvrier non qualifié"           ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Ouvrier agricole"               ~ "Ouvriers et employés",
+                                      profession_chef_de_famille == "Etudiant"                       ~ "Autres",
+                                      profession_chef_de_famille == "Chômeur n’ayant jamais trav."   ~ "Autres",
+                                      profession_chef_de_famille == "Inactif div autre que retraité" ~ "Autres"),
+            milieu_alt = factor(milieu_alt, levels = c("Agriculteur, artisan, commerçant", 
+                                                       "Cadre privé, chef d'entreprise, retraité CPIS/PI",
+                                                       "Cadres et PI de fonction publique / intell.",
+                                                       "Autres professions intermédiaires", 
+                                                       "Ouvriers et employés",
+                                                       "Autres")))
+### Études"Etudes primaires	
+# Extrait de datamap/dictionnaire des codes
+# 1er cycle d’enseignement général (6ème à 3ème), études primaires supérieures	
+# 2ème cycle d’enseignement général (2nde à Terminale), préparation d’un brevet supérieur	
+# Enseignement Technique ou Professionnel COURT (préparation à un CAP, BEP ou équivalent)	
+# Enseignement Technique ou Professionnel LONG (Préparation à un BT, Baccalauréat Professionnel, Brevet d’enseignement Agricole, Commercial, Industriel)	
+# Enseignement Supérieur COURT y compris Technique Supérieur (1 à 2 ans)	
+# Enseignement Supérieur LONG y compris Technique Supérieur (3 ans et +)	
+# Pas d’école	
+# NSP"
 
-i$dipl <- dip[as.character(i$niveau_d_etudes)] %>% 
-  factor(levels = c("Moins que bac", "Bac", "Enseignement Supérieur COURT", "Enseignement Supérieur LONG"))
-
-
+i <- mutate(i, dipl = fct_collapse(niveau_d_etudes, 
+                              "Moins que bac" = c("Pas d’école", 
+                                                  "Etudes primaires", 
+                                                  "Enseig. Tech ou Pro COURT", 
+                                                  "1er cycle d’enseignement gén"),
+                              "Bac" = c("Enseig. Tech ou Pro LONG", 
+                                        "2ème cycle d’enseignement gén")))
 
 ### Fabienne : Mise en classes de l'âge 
-i <- mutate(i, agec = case_when(age<=14 ~ "[10, 14]",
-                                age>=15 & age<=17 ~ "[15, 17]",
+i <- mutate(i, agec = case_when(age<=17 ~ "[10, 17]",
                                 age>=18 & age<=29 ~ "[18, 29]",
                                 age>=30 & age<=39 ~ "[30, 39]",
                                 age>=40 & age<=49 ~ "[40, 49]",
                                 age>=50 ~ ">=50"),
-            agec = factor(agec, levels = c("[10, 14]", "[15, 17]", "[18, 29]", "[30, 39]", "[40, 49]", ">=50")))
+            agec = factor(agec, levels = c("[10, 17]", "[18, 29]", "[30, 39]", "[40, 49]", ">=50")))
 
 
 ### Fabienne : recodage profession (pour comparaison INSEE RP2015)
@@ -248,4 +271,6 @@ i <- mutate(
 )
 
 ### Fabienne : filtre suppression des agriculteurs et anciens agriculteurs
-i <- filter(i,profession %not in% c("Agriculteur exploitant","Ancien agric. exploitant"))
+i <- filter(i, !(profession %in% c("Agriculteur exploitant","Ancien agric. exploitant")))
+i <- mutate(i, profession = fct_drop(profession))
+

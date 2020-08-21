@@ -9,7 +9,14 @@ library(stringr)
 library(janitor)
 library(survey)
 library(knitr)
-library(questionr)
+library(FactoMineR)
+library(factoextra)
+library(tidymodels)
+library(tidygraph)
+library(ggraph)
+
 #library(skimr)
 
 `%not in%`<- Negate(`%in%`)
+
+theme_set(theme_bw())

@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(knitr)
 library(here)
+library(questionr)
 opts_chunk$set(echo = TRUE,
                error = FALSE, warning = FALSE, message = FALSE)
 ```

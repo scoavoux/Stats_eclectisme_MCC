@@ -1,5 +1,11 @@
 # load(here("data", "data.RData"))
 
+###### Renommage propre des variables #######
+
+m <- rename(m, achat_pour_sexe = sexe,
+            achat_pour_age = age,
+            achat_pour_membre_famille = membre_famille)
+
 ###### Recodage des genres ######
 
 # avec quelques interprétations...
@@ -160,7 +166,7 @@ m <- mutate(m, performer = ifelse(performer == "", NA, performer))
 ###### Recodage des noms d'artistes ######
 
 ## Dictionnaire
-source(here("import", "dictionnaires_artistes.R"))
+source(here("import", "dictionnaires_artistes.R"), encoding = "UTF-8")
 for(dic in dics){
   m <- mutate(m, performer = str_replace_all(performer, dic))
 }
@@ -359,66 +365,4 @@ m <- mutate(m, vague = case_when(vague_conso == "m17"     ~ "p17",
                                  year(date_achat) == 2014 ~ "p14",
                                  year(date_achat) == 2015 ~ "p15",
                                  year(date_achat) == 2016 ~ "p16"))
-
-
-###### Base individu ######
-
-## diplome et occupation de ego non renseigné quand ego est chef de famille
-i <- mutate(i, niveau_d_etudes = ifelse(is.na(niveau_d_etudes), niveau_d_etudes_chef_de_famille, niveau_d_etudes),
-            profession         = ifelse(is.na(profession),      profession_chef_de_famille,      profession))
-
-### Etudes = NSP to NA:
-### besoin de recoder.
-i <- mutate(i, niveau_d_etudes = factor(niveau_d_etudes, 
-                                        levels = c("Pas d’école",
-                                                   "Etudes primaires", 
-                                                   "Enseig. Tech ou Pro COURT",
-                                                   "Enseig. Tech ou Pro LONG",
-                                                   "1er cycle d’enseignement gén",
-                                                   "2ème cycle d’enseignement gén",
-                                                   "Enseignement Supérieur COURT", 
-                                                   "Enseignement Supérieur LONG"
-                                          )),
-            profession = factor(profession, 
-                                levels = c("Agriculteur exploitant", 
-                                           "Artisan",
-                                           "Commerçant et assimilé", 
-                                           "Chef d’entreprise +10 sal.",
-                                           "Profession lib. & assimilé", 
-                                           "Cadre fonc pub/prof intel/art",
-                                           "Cadre d’entreprise",
-                                           "inter enseig/santé/fonc. pub",
-                                           "Contremaitre/agent maitrise", 
-                                           "Prof inter adm/com entrep.",
-                                           "Technicien",
-                                           "Pers services dir. aux part", 
-                                           "Employé admin entreprise",
-                                           "Employé de commerce",
-                                           "Employé fonction publique", 
-                                           "Ouvrier qualifié",
-                                           "Ouvrier non qualifié",
-                                           "Ouvrier agricole",
-                                           "Etudiant",
-                                           "Chômeur n’ayant jamais trav.",
-                                           "Inactif div autre que retraité", 
-                                           "Anc. artis/commerc/chef entrep", 
-                                           "Anc. cadre & prof. Inter",
-                                           "Ancien agric. exploitant", 
-                                           "Ancien employé et ouvrier")))
-
-### Milieu social
-
-### Études
-dip <- c("Pas d’école" = "Moins que bac", 
-         "Etudes primaires" = "Moins que bac", 
-         "Enseig. Tech ou Pro COURT" = "Moins que bac", 
-         "Enseig. Tech ou Pro LONG" = "Moins que bac", 
-         "1er cycle d’enseignement gén" = "Moins que bac", 
-         "2ème cycle d’enseignement gén" = "Bac", 
-         "Enseignement Supérieur COURT" = "Enseignement Supérieur COURT", 
-         "Enseignement Supérieur LONG" = "Enseignement Supérieur LONG")
-
-i$dipl <- dip[as.character(i$niveau_d_etudes)] %>% 
-  factor(levels = c("Moins que bac", "Bac", "Enseignement Supérieur COURT", "Enseignement Supérieur LONG"))
-
 
