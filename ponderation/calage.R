@@ -37,5 +37,4 @@ for(v in paste0("p", 13L:19L)){
 # recombiner les résultats
 i <- bind_rows(j)
 
-rm(j)
-rm(marges)
+rm(j, marges, df)

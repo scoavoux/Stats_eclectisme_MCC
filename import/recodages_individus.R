@@ -136,12 +136,13 @@ i <- mutate(i, dipl = fct_collapse(niveau_d_etudes,
                                         "2ème cycle d’enseignement gén")))
 
 ### Fabienne : Mise en classes de l'âge 
-i <- mutate(i, agec = case_when(age<=17 ~ "[10, 17]",
+i <- mutate(i, agec = case_when(age<=14 ~ "[10, 14]",
+                                age>=15 & age<=17 ~ "[15, 17]",
                                 age>=18 & age<=29 ~ "[18, 29]",
                                 age>=30 & age<=39 ~ "[30, 39]",
                                 age>=40 & age<=49 ~ "[40, 49]",
                                 age>=50 ~ ">=50"),
-            agec = factor(agec, levels = c("[10, 17]", "[18, 29]", "[30, 39]", "[40, 49]", ">=50")))
+            agec = factor(agec, levels = c("[10, 14]", "[15, 17]", "[18, 29]", "[30, 39]", "[40, 49]", ">=50")))
 
 
 ### Fabienne : recodage profession (pour comparaison INSEE RP2015)
